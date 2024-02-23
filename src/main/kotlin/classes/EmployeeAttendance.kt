@@ -1,5 +1,8 @@
 package classes
 
+import jakarta.inject.Singleton
+
+@Singleton
 class EmployeeAttendance {
     private val employeeRecords: MutableMap<String, String> = mutableMapOf()
 
