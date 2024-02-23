@@ -1,0 +1,2 @@
+[engine:junit-jupiter]/[class:classes.EmployeeAttendanceTest]/[method:insert a record and check if the record is actually inserted()]
+[engine:junit-jupiter]/[class:classes.EmployeeAttendanceTest]/[method:return id and not specified as status if the record is absent()]
