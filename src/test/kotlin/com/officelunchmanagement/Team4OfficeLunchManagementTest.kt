@@ -26,5 +26,12 @@ class Team4OfficeLunchManagementTest {
         specification.contentType("application/json").body(requestBody).`when`().post("/member/check").then()
             .assertThat().body(`is`(responseBody))
     }
+    @Test
+    fun `check endpoint should return the success message when a record is saved`(specification: RequestSpecification) {
+        val requestBody = "{\"id\":\"1a\",\"name\":\"selva\",\"status\":\"yes\"}"
+        val responseBody = "Preference Saved Successfully"
+        specification.contentType("application/json").body(requestBody).`when`().post("/member/addpreference").then()
+            .assertThat().body(`is`(responseBody))
+    }
 
 }
