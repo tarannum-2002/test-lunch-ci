@@ -28,10 +28,18 @@ class Team4OfficeLunchManagementTest {
     }
 
     @Test
-    fun `members endpoint should return the member record when a body of member is passed`(specification: RequestSpecification) {
+    fun `memberhomepage endpoint should return the member record when a body of member is passed`(specification: RequestSpecification) {
         val requestBody = "{\"id\":\"1a\",\"name\":\"selva\",\"status\":\"Yes\",\"date\":\"24/02/2024\"}"
         val responseBody = "{\"id\":\"1a\",\"name\":\"selva\",\"status\":\"Yes\",\"date\":\"24/02/2024\"}"
-        specification.contentType("application/json").body(requestBody).`when`().post("/members").then()
+        specification.contentType("application/json").body(requestBody).`when`().post("/lunchmgmt/memberhome").then()
+            .assertThat().body(`is`(responseBody))
+    }
+
+    @Test
+    fun `admin endpoint in members should return the member record when a body of member is passed`(specification: RequestSpecification) {
+        val requestBody = "24/02/2024"
+        val responseBody = "0"
+        specification.contentType("text/plain").body(requestBody).`when`().get("/lunchmgmt/admin/count").then()
             .assertThat().body(`is`(responseBody))
     }
 

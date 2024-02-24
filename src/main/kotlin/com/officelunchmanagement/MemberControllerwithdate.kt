@@ -2,25 +2,28 @@ package com.officelunchmanagement
 
 
 import classes.EmployeeAttendancewithdate
-import classes.EmployeeAttendance
 import classes.PageData
-import classes.RecordResponse
-import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
-import jakarta.inject.Inject
-import netscape.javascript.JSObject
-import java.sql.Date
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
-//@PathVariable id: String
-@Controller("/members")
-class MemberControllerwithdate {
+@Controller("/lunchmgmt")
+class MemberControllerwithdate(private val memberAttendance: EmployeeAttendancewithdate) {
 
-    @Inject
-    lateinit var memberAttendance: EmployeeAttendancewithdate
-    @Post
+    @Post("/memberlogin")
+    fun CreateRecord(@Body pageData: PageData): PageData {
+        //val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        //val receivedDate: LocalDate = LocalDate.parse(pageData.date, formatter)
+        val response = memberAttendance.insertRecordIfdosentExistOrUpdate(pageData.date,pageData.name,pageData.status,pageData.id)
+
+        return response
+    }
+
+
+
+
+
+
+    @Post("/memberhome")
     fun CheckAndReturnRecord(@Body pageData: PageData): PageData {
         //val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         //val receivedDate: LocalDate = LocalDate.parse(pageData.date, formatter)
@@ -30,13 +33,24 @@ class MemberControllerwithdate {
     }
 
 
-    @Post("/all")
-    fun giveAllforday(@Body pageData: PageData): MutableList<PageData> {
+    @Get("/admin")
+    @Consumes(MediaType.TEXT_PLAIN)
+    fun giveAllforday(@Body date: String): MutableList<PageData> {
         //val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         //val receivedDate: LocalDate = LocalDate.parse(pageData.date, formatter)
-        val response = memberAttendance.insertRecordIfdosentExistOrUpdate(pageData.date,pageData.name,pageData.status,pageData.id)
+       // val response = memberAttendance.insertRecordIfdosentExistOrUpdate(pageData.date,pageData.name,pageData.status,pageData.id)
+       // println(pageData.date)
+        return memberAttendance.getAll(date)
+    }
 
-        return memberAttendance.getAll(pageData.date)
+    @Get("/admin/count")
+    @Consumes(MediaType.TEXT_PLAIN)
+    fun giveAllfordaycount(@Body date:String): Int{
+        //val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        //val receivedDate: LocalDate = LocalDate.parse(pageData.date, formatter)
+        //val response = memberAttendance.insertRecordIfdosentExistOrUpdate(pageData.date,pageData.name,pageData.status,pageData.id)
+      //println(date)
+        return memberAttendance.getAll(date).size
     }
 
 
