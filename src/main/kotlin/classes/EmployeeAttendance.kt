@@ -4,17 +4,18 @@ import jakarta.inject.Singleton
 
 @Singleton
 class EmployeeAttendance {
-    private val employeeRecords: MutableMap<Pair<String,String>, String> = mutableMapOf()
+    private val employeeRecords: MutableMap<String, MemberPreference> = mutableMapOf()
 
-    fun returnRecordIfExistsOrSendDefault(employeeId: String,employeeName: String): Triple<String, String, String> {
-        if (!employeeRecords.containsKey(Pair(employeeId,employeeName))) {
-            employeeRecords[Pair(employeeId,employeeName)] = "not specified"
+    fun returnRecordIfExistsOrSendDefault(employeeId: String,name:String): MemberPreference? {
+        if (!employeeRecords.containsKey(employeeId)) {
+            val responseRecord=MemberPreference(employeeId,name,"not specified")
+            employeeRecords[employeeId]=responseRecord
         }
-        return Triple(employeeId, employeeName,employeeRecords[Pair(employeeId,employeeName)]!!)
+        return employeeRecords[employeeId]
     }
 
-    fun insertNewRecord(employeeId: String, employeeName: String, status: String): String {
-        employeeRecords[Pair(employeeId,employeeName)] = status
+    fun insertNewRecord(memberPreference: MemberPreference): String {
+        employeeRecords[memberPreference.id] = memberPreference
         return "ok"
     }
 }
