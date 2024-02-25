@@ -18,4 +18,8 @@ class EmployeeAttendance {
         employeeRecords[memberPreference.id] = memberPreference
         return "ok"
     }
+
+    fun getEmployeeRecords(): MutableMap<String, MemberPreference>{
+        return employeeRecords
+    }
 }
