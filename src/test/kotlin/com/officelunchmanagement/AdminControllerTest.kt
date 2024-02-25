@@ -1,7 +1,6 @@
 package com.officelunchmanagement
 
 
-
 import classes.EmployeeAttendance
 import classes.MemberPreference
 import io.micronaut.http.HttpRequest
@@ -47,8 +46,50 @@ class AdminControllerTest {
 
     }
 
+    @Test
+    fun `check if you get response count as 0 if employee attendance has No entry`() {
+        val client = HttpClient.create(embeddedServer.url)
+        val request: HttpRequest<Any> = HttpRequest.GET("/admin/count")
+        val response = client.toBlocking().exchange(request, Map::class.java)
+        assertEquals(0, response.body()["count"])
+    }
 
+    @Test
+    fun `check if you get response count as 0 if employee attendance has no entry with Yes`() {
+        val client = HttpClient.create(embeddedServer.url)
+        val memberInfo = MemberPreference("1", "Vishwa", "No")
+        val addMemberPreferencerequest = HttpRequest.POST("/member/addpreference", memberInfo)
+        client.toBlocking().exchange(addMemberPreferencerequest, String::class.java)
+        val request: HttpRequest<Any> = HttpRequest.GET("/admin/count")
+        val response = client.toBlocking().exchange(request, Map::class.java)
+        assertEquals(0, response.body()["count"])
+    }
 
+    @Test
+    fun `check if you get response count as 1 if employee attendance has 1 entry with Yes`() {
+        val client = HttpClient.create(embeddedServer.url)
+        val memberInfo = MemberPreference("1", "Vishwa", "Yes")
+        val addMemberPreferencerequest = HttpRequest.POST("/member/addpreference", memberInfo)
+        client.toBlocking().exchange(addMemberPreferencerequest, String::class.java)
+        val request: HttpRequest<Any> = HttpRequest.GET("/admin/count")
+        val response = client.toBlocking().exchange(request, Map::class.java)
+        assertEquals(1, response.body()["count"])
+    }
+
+    @Test
+    fun `check if you get response count as 1 if employee attendance has only 1 entry with Yes`() {
+        val client = HttpClient.create(embeddedServer.url)
+        val memberInfo = listOf( MemberPreference("1", "Vishwa", "Yes"),
+            MemberPreference("2", "Tarunam", "No"))
+
+        memberInfo.forEach {
+            val addMemberPreferencerequest = HttpRequest.POST("/member/addpreference", it)
+            client.toBlocking().exchange(addMemberPreferencerequest, String::class.java)
+        }
+        val request: HttpRequest<Any> = HttpRequest.GET("/admin/count")
+        val response = client.toBlocking().exchange(request, Map::class.java)
+        assertEquals(1, response.body()["count"])
+    }
 
 
 }
