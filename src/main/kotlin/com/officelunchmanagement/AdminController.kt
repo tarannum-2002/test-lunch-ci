@@ -5,7 +5,7 @@ import classes.EmployeeAttendance
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MutableHttpResponse
 import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.Get
 import jakarta.inject.Inject
 
 
@@ -15,7 +15,7 @@ class AdminController{
     @Inject
     var memberAttendance = EmployeeAttendance()
 
-    @Post("/count")
+    @Get("/count")
     fun getCount(): MutableHttpResponse<Map<String, Int>>? {
         var count = 0
 

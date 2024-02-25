@@ -39,13 +39,16 @@ class AdminControllerTest {
     fun `check if you get response are 200 on hitting the count url`() {
         val client = HttpClient.create(embeddedServer.url)
 
-        val request: HttpRequest<Any> = HttpRequest.POST("/admin/count", "")
+        val request: HttpRequest<Any> = HttpRequest.GET("/admin/count")
         val response: HttpResponse<Map<String, Map<String, MemberPreference>>> = client.toBlocking()
             .exchange(request)
 
         assertEquals(200, response.status.code)
 
     }
+
+
+
 
 
 }
