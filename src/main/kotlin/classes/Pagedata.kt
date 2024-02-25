@@ -9,3 +9,10 @@ data class PageData(
     var status:String,
     var date: String
 )
+
+@Serdeable
+data class PageData1(
+    var id: String,
+    var name: String,
+    var date: String
+)

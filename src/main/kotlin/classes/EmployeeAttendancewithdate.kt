@@ -29,13 +29,33 @@ class EmployeeAttendancewithdate {
             }
 
             employeeRecords[date]!!.add(newDetails)
-            println(employeeRecords)
         }
 
         return newDetails
     }
 
+
+    fun checkFordata(date: String, name: String, id: String): PageData {
+        val details1 = PageData(id, name, "Yes", date)
+        val details2 = PageData(id, name, "No", date)
+        if (!employeeRecords.containsKey(date)) {
+
+            employeeRecords[date] = mutableListOf()
+        }
+
+        if (employeeRecords[date]!!.contains(details1)) {
+            return details1
+        } else if (employeeRecords[date]!!.contains(details2)) {
+            return details2
+        } else {
+            return insertRecordIfdosentExistOrUpdate(date, name, "Not specified", id)
+        }
+
+    }
+
+
     fun getAll(date: String): MutableList<PageData> {
+
 
         if (!employeeRecords.containsKey(date)) {
             val temp: MutableList<PageData> = mutableListOf()
