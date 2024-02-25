@@ -9,7 +9,3 @@ data class PageData(
     var status:String,
     var date: String
 )
-
-
-@Serdeable
-data class Datee(val date:String)

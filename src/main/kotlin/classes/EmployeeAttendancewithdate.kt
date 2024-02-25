@@ -12,7 +12,7 @@ class EmployeeAttendancewithdate {
         val newDetails = PageData(id, name, status, date)
 
         if (!employeeRecords.containsKey(date)) {
-            println("Hi")
+
             employeeRecords[date] = mutableListOf(newDetails)
         } else {
 
@@ -31,12 +31,12 @@ class EmployeeAttendancewithdate {
             employeeRecords[date]!!.add(newDetails)
             println(employeeRecords)
         }
-        println(employeeRecords)
+
         return newDetails
     }
 
     fun getAll(date: String): MutableList<PageData> {
-        println(employeeRecords)
+
         if (!employeeRecords.containsKey(date)) {
             val temp: MutableList<PageData> = mutableListOf()
             return temp

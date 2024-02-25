@@ -13,47 +13,50 @@ class MemberControllerwithdate(private val memberAttendance: EmployeeAttendancew
     fun CreateRecord(@Body pageData: PageData): PageData {
         //val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         //val receivedDate: LocalDate = LocalDate.parse(pageData.date, formatter)
-        val response = memberAttendance.insertRecordIfdosentExistOrUpdate(pageData.date,pageData.name,pageData.status,pageData.id)
+        val response = memberAttendance.insertRecordIfdosentExistOrUpdate(
+            pageData.date,
+            pageData.name,
+            pageData.status,
+            pageData.id
+        )
 
         return response
     }
-
-
-
-
 
 
     @Post("/memberhome")
     fun CheckAndReturnRecord(@Body pageData: PageData): PageData {
         //val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         //val receivedDate: LocalDate = LocalDate.parse(pageData.date, formatter)
-        val response = memberAttendance.insertRecordIfdosentExistOrUpdate(pageData.date,pageData.name,pageData.status,pageData.id)
+        val response = memberAttendance.insertRecordIfdosentExistOrUpdate(
+            pageData.date,
+            pageData.name,
+            pageData.status,
+            pageData.id
+        )
 
         return response
     }
 
 
-    @Get("/admin")
-    @Consumes(MediaType.TEXT_PLAIN)
-    fun giveAllforday(@Body date: String): MutableList<PageData> {
+    @Get("/admin/details")
+    // @Consumes(MediaType.TEXT_PLAIN)
+    // getting date as a query paramenter, if we want it to be in body chnge ewquest type to Post
+    fun giveAllforday(date: String): MutableList<PageData> {
         //val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         //val receivedDate: LocalDate = LocalDate.parse(pageData.date, formatter)
-       // val response = memberAttendance.insertRecordIfdosentExistOrUpdate(pageData.date,pageData.name,pageData.status,pageData.id)
-       // println(pageData.date)
         return memberAttendance.getAll(date)
     }
 
-    @Get("/admin/count")
-    @Consumes(MediaType.TEXT_PLAIN)
-    fun giveAllfordaycount(@Body date:String): Int{
+    @Get("/admin")
+    //@Consumes(MediaType.TEXT_PLAIN)
+    // getting date as a query paramenter, if we want it to be in body chnge ewquest type to Post
+    fun giveAllfordaycount(date: String): Int {
         //val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         //val receivedDate: LocalDate = LocalDate.parse(pageData.date, formatter)
-        //val response = memberAttendance.insertRecordIfdosentExistOrUpdate(pageData.date,pageData.name,pageData.status,pageData.id)
-      //println(date)
+
         return memberAttendance.getAll(date).size
     }
-
-
 
 
 }

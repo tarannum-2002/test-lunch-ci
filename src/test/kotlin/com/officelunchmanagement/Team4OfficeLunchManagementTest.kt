@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import jakarta.inject.Inject
 import io.restassured.specification.RequestSpecification
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.`is`
 
 @MicronautTest
@@ -35,12 +36,18 @@ class Team4OfficeLunchManagementTest {
             .assertThat().body(`is`(responseBody))
     }
 
+
     @Test
     fun `admin endpoint in members should return the member record when a body of member is passed`(specification: RequestSpecification) {
-        val requestBody = "24/02/2024"
+        val dateQueryParam = "24/02/2024" // date as a query parameter
         val responseBody = "0"
-        specification.contentType("text/plain").body(requestBody).`when`().get("/lunchmgmt/admin/count").then()
-            .assertThat().body(`is`(responseBody))
+        specification.param("date", dateQueryParam)
+            .contentType("text/plain")
+            .`when`()
+            .get("/lunchmgmt/admin")
+            .then()
+            .assertThat()
+            .body(equalTo(responseBody))
     }
 
 }
