@@ -9,6 +9,8 @@ import io.micronaut.http.annotation.*
 @Controller("/lunchmgmt")
 class MemberControllerwithdate(private val memberAttendance: EmployeeAttendancewithdate) {
 
+
+    //ignore this endpoint was made for other stories
     @Post("/memberlogin")
     fun CreateRecord(@Body pageData: PageData): PageData {
         //val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
@@ -54,8 +56,33 @@ class MemberControllerwithdate(private val memberAttendance: EmployeeAttendancew
     fun giveAllfordaycount(date: String): Int {
         //val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         //val receivedDate: LocalDate = LocalDate.parse(pageData.date, formatter)
+        val coming:MutableList<PageData> = mutableListOf()
 
-        return memberAttendance.getAll(date).size
+        for(every in memberAttendance.getAll(date)){
+            if(every.status=="Yes"){
+                coming.add(every)
+            }
+        }
+
+        return coming.size
+    }
+
+    @Get("/admin/coming")
+    //@Consumes(MediaType.TEXT_PLAIN)
+    // getting date as a query paramenter, if we want it to be in body chnge query type to Post
+    fun giveComingAllforday(date: String): MutableList<PageData> {
+        //val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        //val receivedDate: LocalDate = LocalDate.parse(pageData.date, formatter)
+
+        val coming:MutableList<PageData> = mutableListOf()
+
+        for(every in memberAttendance.getAll(date)){
+            if(every.status=="Yes"){
+                coming.add(every)
+            }
+        }
+
+        return coming
     }
 
 
