@@ -7,8 +7,11 @@ import classes.PageData1
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
 
+
 @Controller("/lunchmgmt")
 class MemberControllerwithdate(private val memberAttendance: EmployeeAttendancewithdate) {
+
+    //MEMBER
 
     @Post("/member/check")
     fun CreateRecord(@Body pageData: PageData1): PageData {
@@ -32,6 +35,8 @@ class MemberControllerwithdate(private val memberAttendance: EmployeeAttendancew
         return response
     }
 
+
+    //ADMIN
 
     @Get("/admin/alldetails")
     // @Consumes(MediaType.TEXT_PLAIN)

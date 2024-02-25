@@ -30,21 +30,21 @@ class TeamManagementwithdateTest {
 
     @Test
     fun `memberhomepage endpoint should return the member record when a body of member is passed`(specification: RequestSpecification) {
-        val requestBody = "{\"id\":\"1a\",\"name\":\"selva\",\"status\":\"Yes\",\"date\":\"24/02/2024\"}"
-        val responseBody = "{\"id\":\"1a\",\"name\":\"selva\",\"status\":\"Yes\",\"date\":\"24/02/2024\"}"
-        specification.contentType("application/json").body(requestBody).`when`().post("/lunchmgmt/memberhome").then()
+        val requestBody = "{\"id\":\"1a\",\"name\":\"selva\",\"status\":\"Yes\",\"date\":\"2024/02/25\"}"
+        val responseBody = "{\"id\":\"1a\",\"name\":\"selva\",\"status\":\"Yes\",\"date\":\"2024/02/25\"}"
+        specification.contentType("application/json").body(requestBody).`when`().post("/lunchmgmt/member/home").then()
             .assertThat().body(`is`(responseBody))
     }
 
 
     @Test
     fun `admin endpoint in members should return the member record when a body of member is passed`(specification: RequestSpecification) {
-        val dateQueryParam = "24/02/2024" // date as a query parameter
+        val dateQueryParam = "2024/02/25" // date as a query parameter
         val responseBody = "1"
         specification.param("date", dateQueryParam)
             .contentType("text/plain")
             .`when`()
-            .get("/lunchmgmt/admin")
+            .get("/lunchmgmt/admin/coming/count")
             .then()
             .assertThat()
             .body(equalTo(responseBody))
