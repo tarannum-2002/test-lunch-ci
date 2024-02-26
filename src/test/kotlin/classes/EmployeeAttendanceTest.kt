@@ -9,10 +9,10 @@ class EmployeeAttendanceTest {
     private val employeeAttendance = EmployeeAttendance()
     @Test
     fun `return id and not specified as status if the record is absent`() {
-        val (id,name,status) = employeeAttendance.returnRecordIfExistsOrSendDefault("1a","selva")
+        val (id,name,status) = employeeAttendance.returnRecordIfExistsOrSendDefault("1a","Vishwa")
 
         assertEquals("1a",id)
-        assertEquals("selva",name)
+        assertEquals("Vishwa",name)
         assertEquals("not specified",status)
     }
 
